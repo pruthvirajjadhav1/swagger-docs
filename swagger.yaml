@@ -13,14 +13,218 @@ info:
 #     description: For localhost - secure
 
 servers:
-  - url: "https://localhost:8000/api/{version}"
+  - url: "{protocol}://localhost:8000/api/{version}"
     description: For localhost
     variables:
       version:
         enum:
           - v1
           - v2
+        default: v1
       protocol:
         enum:
           - http
           - https
+        default: http
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /test:
+    get:
+      tags:
+        - String
+      summary: returns a shit string
+      responses:
+        200:
+          description: All good
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /testApi:
+    get:
+      tags:
+        - Object
+      summary: returns a shit object
+      responses:
+        200:
+          description: All good
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  num:
+                    type: number
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /testArray:
+    get:
+      tags:
+        - Array
+      summary: returns a shit array
+      responses:
+        200:
+          description: All good
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    num:
+                      type: number
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /testId/{id}:
+    get:
+      tags:
+        - String
+      summary: returns a shit based on req id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          default: 1
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: All good
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  num:
+                    type: number
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /testPost:
+    post:
+      tags:
+        - String
+      summary: adds new shit data
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                num:
+                  type: number
+      responses:
+        200:
+          description: All good
+          content:
+            application/json:
+              schema:
+                type: boolean
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /testQuery:
+    get:
+      tags:
+        - String
+      summary: trying query shit
+      parameters:
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [delhi, london, pune]
+        - name: device
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [web, mobile]
+      responses:
+        200:
+          description: All good
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  value:
+                    type: string
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /testUpload:
+    post:
+      tags:
+        - String
+      summary: trying to upload shit
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: Looking good
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
