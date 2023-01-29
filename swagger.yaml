@@ -212,6 +212,9 @@ paths:
       tags:
         - String
       summary: trying to upload shit
+      parameters:
+        - in: header
+          name: auth
       requestBody:
         content:
           multipart/form-data:
