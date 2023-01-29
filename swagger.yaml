@@ -13,6 +13,8 @@ info:
 #     description: For localhost - secure
 
 servers:
+  - url: "{protocol}:https://swagger-testing.onrender.com/api/{version}"
+    description: For live server
   - url: "{protocol}://localhost:8000/api/{version}"
     description: For localhost
     variables:
