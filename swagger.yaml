@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info:
+  title: Testing the swagger UI
+  description: Test apis from the docs
+  version: 1.0.0
+  contact:
+    email: pruthvirajjadhav1@gmail.com
+
+# servers:
+#   - url: "http://localhost:8000/api/v1"
+#     description: For localhost - regular
+#   - url: "https://localhost:8000/api/v1"
+#     description: For localhost - secure
+
+servers:
+  - url: "https://localhost:8000/api/{version}"
+    description: For localhost
+    variables:
+      version:
+        enum:
+          - v1
+          - v2
+      protocol:
+        enum:
+          - http
+          - https
