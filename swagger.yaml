@@ -25,7 +25,7 @@ servers:
         enum:
           - http
           - https
-        default: http
+        default: https
   - url: "{protocol}://localhost:8000/api/{version}"
     description: For localhost
     variables:
